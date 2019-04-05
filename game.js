@@ -82,7 +82,7 @@ class Level {
   constructor(arrayGrid = [], arrayActor = []) {
     this.grid = arrayGrid;
     this.actors = arrayActor;
-    this.player = arrayActor.find(actor => actor.type === 'player');
+    this.player = arrayActor.find(actor => Boolean(actor.type === 'player'));
     this.height = this.grid.length;
     this.width = Math.max(0, ...this.grid.map(element => element.length));
     this.status = null;
@@ -98,12 +98,12 @@ class Level {
   actorAt(actorObj) {
     if (actorObj instanceof Actor) {
       return this.actors.find(
-        function (actor) {
+        (actor) => {
           if (actorObj.isIntersect(actor)) {
             return actor;
-          } else {
+          } 
             return;
-          }
+          
         });
     } else {
       throw new Error("Передать можно только вектор типа Actor");
@@ -250,21 +250,21 @@ class Fireball extends Actor {
 class HorizontalFireball extends Fireball {
   constructor(vectorPosition = new Vector(0, 0)) {
     super(vectorPosition, new Vector(2, 0));
-    this.speed = new Vector(2, 0);
+    // this.speed = new Vector(2, 0);
   }
 }
 
 class VerticalFireball extends Fireball {
   constructor(vectorPosition = new Vector(0, 0)) {
     super(vectorPosition, new Vector(0, 2));
-    this.speed = new Vector(0, 2);
+    // this.speed = new Vector(0, 2);
   }
 }
 
 class FireRain extends Fireball {
-  constructor(vectorPosition = new Vector(0, 0)) {
+  constructor(vectorPosition = new Vector(4, 0)) {
     super(vectorPosition, new Vector(0, 3));
-    this.speed = new Vector(0, 3);
+    // this.speed = new Vector(0, 3);
     this.startPosition = vectorPosition;
   }
   handleObstacle() {
@@ -275,7 +275,7 @@ class FireRain extends Fireball {
 class Coin extends Actor {
   constructor(vectorPosition = new Vector(0, 0)) {
     super(vectorPosition, new Vector(0.6, 0.6), new Vector(vectorPosition.x + 0.2, vectorPosition.y + 0.1));
-    this.size = new Vector(0.6, 0.6);
+    // this.size = new Vector(0.6, 0.6);
  
     this.pos = new Vector(vectorPosition.x + 0.2, vectorPosition.y + 0.1);
     this.posStart = this.pos;
@@ -308,7 +308,7 @@ class Player extends Actor {
   constructor(vectorPosition = new Vector(0, 0)) {
     super(vectorPosition, new Vector(vectorPosition.x + 0, vectorPosition.y - 0.5), new Vector(0.8, 1.5) );
     this.pos = new Vector(vectorPosition.x + 0, vectorPosition.y - 0.5);
-    console.log(this.pos);
+    
     this.speed = new Vector(0, 0);
     this.size = new Vector(0.8, 1.5);
   }
