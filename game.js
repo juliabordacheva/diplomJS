@@ -1,6 +1,6 @@
 'use strict';
 
-'use strict';
+
 class Vector {
   constructor(x = 0, y = 0) {
     this.x = x;
@@ -73,7 +73,8 @@ class Actor {
     if (this.left < actorObj.right && this.right > actorObj.left &&
       this.bottom > actorObj.top && this.top < actorObj.bottom) {
       return true;
-    } return false;
+    } 
+    return false;
   }
 }
 
@@ -90,7 +91,8 @@ class Level {
   isFinished() {
     if (this.status !== null && this.finishDelay < 0) {
       return true;
-    } return false;
+    } 
+    return false;
   }
 
   actorAt(actorObj) {
@@ -100,7 +102,7 @@ class Level {
           if (actorObj.isIntersect(actor)) {
             return actor;
           } else {
-            return undefined;
+            return;
           }
         });
     } else {
@@ -171,22 +173,24 @@ class LevelParser {
   }
   actorFromSymbol(symbolString) {
     if (symbolString === null || symbolString === undefined) {
-      return undefined;
+      return;
     }
     const keysArr = Object.keys(this.actorsDict);
     if (keysArr.find(actor => actor === symbolString)) {
       return this.actorsDict[symbolString];
     }
-    return undefined;
+    return;
   }
   obstacleFromSymbol(symbolString) {
     if (symbolString === 'x') {
       return 'wall';
     } else if (symbolString === '!') {
       return 'lava';
-    } else { return undefined; }
+    } else { 
+      return; 
+    }
   }
-  createGrid(plan) { // возвращает сетку, без движущихся объектов
+  createGrid(plan) {
     const grid = plan.map(line => line.split(''));
     const grid1 = grid.map(line => line.map(cell => this.obstacleFromSymbol(cell)));
     return grid1;
